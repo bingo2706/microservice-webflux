@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+
+    <changeSet author="profile" id="add-index-table-profile-column-name" runAlways="true">
+        <preConditions onFail="CONTINUE" onFailMessage="index idx_profile_name already exists">
+            <not>
+                <indexExists indexName="idx_profile_name" />
+            </not>
+        </preConditions>
+        <createIndex indexName="idx_profile_name" tableName="profile">
+            <column name="name" />
+        </createIndex>
+    </changeSet>
+    <changeSet author="profile" id="add-index-table-profile-column-email" runAlways="true">
+        <preConditions onFail="CONTINUE" onFailMessage="index idx_profile_email already exists">
+            <not>
+                <indexExists indexName="idx_profile_email" />
+            </not>
+        </preConditions>
+        <createIndex indexName="idx_profile_email" tableName="profile">
+            <column name="email" />
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

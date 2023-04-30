@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet id="create-table-profile" author="profile" runAlways="true">
+        <preConditions onFail="CONTINUE" onFailMessage="table profile already exists">
+            <not>
+                <tableExists tableName="profile" />
+            </not>
+        </preConditions>
+        <createTable tableName="profile">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="table-profile-add-column-email" author="profile" runAlways="true">
+        <preConditions onFail="CONTINUE" onFailMessage="column email already exists in table profile">
+            <not>
+                <columnExists  tableName="profile" columnName="email" />
+            </not>
+        </preConditions>
+        <addColumn tableName="profile">
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false" />
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="table-profile-add-column-status" author="profile">
+        <preConditions onFail="CONTINUE" onFailMessage="column status already exists in table profile">
+            <not>
+                <columnExists  tableName="profile" columnName="status" />
+            </not>
+        </preConditions>
+        <addColumn tableName="profile">
+            <column name="status" type="VARCHAR(255)">
+                <constraints nullable="false" />
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="table-profile-add-column-name" author="profile">
+        <preConditions onFail="CONTINUE" onFailMessage="column name already exists in table profile">
+            <not>
+                <columnExists  tableName="profile" columnName="name" />
+            </not>
+        </preConditions>
+        <addColumn tableName="profile">
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false" />
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="table-profile-add-column-role" author="profile">
+        <preConditions onFail="CONTINUE" onFailMessage="column role already exists in table profile">
+            <not>
+                <columnExists  tableName="profile" columnName="role" />
+            </not>
+        </preConditions>
+        <addColumn tableName="profile">
+            <column name="role" type="VARCHAR(255)">
+                <constraints nullable="false" />
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>
