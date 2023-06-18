@@ -20,6 +20,10 @@ public class EventConsumer {
     Gson gson = new Gson();
     @Autowired
     AccountService accountService;
+
+    @Autowired
+    EventProducer eventProducer;
+
     public EventConsumer(ReceiverOptions<String,String> receiverOptions){
         KafkaReceiver.create(receiverOptions.subscription(Collections.singleton(Constant.PROFILE_ONBOARDING_TOPIC)))
                 .receive().subscribe(this::profileOnboarding);
@@ -32,6 +36,9 @@ public class EventConsumer {
         accountDTO.setReserved(0);
         accountDTO.setBalance(dto.getInitialBalance());
         accountDTO.setCurrency("USD");
-        accountService.createNewAccount(accountDTO).subscribe();
+        accountService.createNewAccount(accountDTO).subscribe(res ->{
+            dto.setStatus(Constant.STATUS_PROFILE_ACTIVE);
+            eventProducer.send(Constant.PROFILE_ONBOARDED_TOPIC,gson.toJson(dto)).subscribe();
+        });
     }
 }
