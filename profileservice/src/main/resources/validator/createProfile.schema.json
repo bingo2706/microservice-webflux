@@ -4,7 +4,7 @@
   "title": "Validate create profile request",
   "description": "Create New Profile",
   "type": "object",
-  "additionalProperties": false,
+  "additionalProperties": true,
   "properties": {
     "email": {
       "type": "string",
