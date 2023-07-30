@@ -26,7 +26,7 @@ public class ProfileService {
     public Flux<ProfileDTO> getAllProfile(){
         return profileRepository.findAll()
                 .map(ProfileDTO::entityToDto)
-                .switchIfEmpty(Mono.error(new Exception("Profile list empty")));
+                .switchIfEmpty(Mono.error(new CommonException("PF01","Empty profile list !", HttpStatus.NOT_FOUND)));
     }
     public Mono<Boolean> checkDuplicate(String email){
         return profileRepository.findByEmail(email)

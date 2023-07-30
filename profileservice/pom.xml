@@ -149,7 +149,8 @@
 					<excludes>
 						<exclude>**/model/**</exclude>
 						<exclude>**/configuration/**</exclude>
-						<exclude>**/ProfileServiceApplication.*</exclude>
+						<exclude>**/ProfileserviceApplication.*</exclude>
+						<exclude>**/Constant.*</exclude>
 					</excludes>
 				</configuration>
 				<executions><execution><id>default</id><goals><goal>prepare-agent</goal></goals></execution><execution><id>default-report</id><phase>prepare-package</phase><goals><goal>report</goal></goals></execution></executions>
