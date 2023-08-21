@@ -1,0 +1,5 @@
+kafka-topics.bat --create --topic tanthanh --bootstrap-server localhost:9092
+kafka-topics.bat --list --bootstrap-server localhost:9092
+
+C:\kafka\bin\windows\kafka-server-start.bat C:\kafka\config\server.properties
+C:\kafka\bin\windows\zookeeper-server-start.bat C:\kafka\config\zookeeper.properties
