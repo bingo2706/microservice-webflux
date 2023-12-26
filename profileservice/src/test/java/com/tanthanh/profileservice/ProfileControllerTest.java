@@ -46,7 +46,7 @@ class ProfileControllerTest {
     void checkDuplicate(){
         when(profileService.checkDuplicate(anyString())).thenReturn(Mono.just(true));
         profileController.checkDuplicate(anyString()).getBody().
-                doOnNext(aBoolean -> Assertions.assertEquals(aBoolean,true)).subscribe();
+                doOnNext(aBoolean -> Assertions.assertEquals(true,aBoolean)).subscribe();
     }
     @Test
     void createNewProfile(){

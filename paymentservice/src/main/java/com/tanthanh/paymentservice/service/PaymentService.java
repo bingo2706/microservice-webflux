@@ -1,8 +1,11 @@
 package com.tanthanh.paymentservice.service;
 
+import com.google.gson.Gson;
 import com.tanthanh.commonservice.common.CommonException;
 import com.tanthanh.commonservice.model.AccountDTO;
 import com.tanthanh.commonservice.utils.Constant;
+import com.tanthanh.paymentservice.data.Payment;
+import com.tanthanh.paymentservice.event.EventProducer;
 import com.tanthanh.paymentservice.model.PaymentDTO;
 import com.tanthanh.paymentservice.repository.PaymentRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +25,10 @@ public class PaymentService {
     @Autowired
     WebClient webClientAccount;
 
+    @Autowired
+    EventProducer eventProducer;
 
+    Gson gson = new Gson();
     public Flux<PaymentDTO> getAllPayment(String id){
         return paymentRepository.findByAccountId(id)
                 .map(PaymentDTO::entityToDto)
@@ -47,6 +53,16 @@ public class PaymentService {
                 .map(PaymentDTO::dtoToEntity)
                 .flatMap(payment -> paymentRepository.save(payment))
                 .map(PaymentDTO::entityToDto)
-                .doOnError(throwable -> log.error(throwable.getMessage()));
+                .doOnError(throwable -> log.error(throwable.getMessage()))
+                .doOnSuccess(paymentDTO1 -> eventProducer.sendPaymentRequest(Constant.PAYMENT_REQUEST_TOPIC,gson.toJson(paymentDTO1)).subscribe());
+    }
+    public Mono<PaymentDTO> updateStatusPayment(PaymentDTO paymentDTO){
+        return paymentRepository.findById(paymentDTO.getId())
+                .switchIfEmpty(Mono.error(new CommonException("P03", "Payment not found", HttpStatus.NOT_FOUND)))
+                .flatMap(payment -> {
+                    payment.setStatus(paymentDTO.getStatus());
+                    return paymentRepository.save(payment);
+                })
+                .map(PaymentDTO::entityToDto);
     }
 }

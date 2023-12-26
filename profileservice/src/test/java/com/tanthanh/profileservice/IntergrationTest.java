@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
 @SpringBootTest(properties = "application.properties")
 @AutoConfigureWebTestClient
 @Slf4j
-class intergrationTest {
+class IntergrationTest {
 
     @Autowired
     WebTestClient webTestClient;
